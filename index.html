@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terampil Hitung Cepat</title>
+<title>Terampil Berhitung - Penjumlahan</title>
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -96,7 +96,7 @@
         margin-bottom: 8px;
         letter-spacing: 0.5px;
     }
-    #subtitle-perkalian {
+    #subtitle-op {
         font-size: 30px;
         font-weight: 900;
         font-style: italic;
@@ -107,11 +107,6 @@
         color: transparent;
         margin-bottom: 22px;
         text-shadow: 1px 1px 0 rgba(0,0,0,0.05);
-    }
-    #landing p.sub {
-        color: #888;
-        font-size: 14px;
-        margin-bottom: 30px;
     }
     .menu-btn {
         display: flex;
@@ -234,6 +229,21 @@
     }
     #petunjuk-close-btn:hover { transform: translateY(-2px); }
 
+    /* Tombol kembali dipakai di view game & form */
+    .back-btn {
+        display: inline-block;
+        margin-bottom: 15px;
+        background: #333;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        opacity: 0.85;
+    }
+    .back-btn:hover { opacity: 1; }
+
     /* ===== View: Lihat Peserta ===== */
     #view-peserta.active {
         display: flex;
@@ -304,26 +314,9 @@
         background: #fafafa;
     }
 
-    /* Tombol kembali dipakai di view game & form */
-    .back-btn {
-        display: inline-block;
-        margin-bottom: 15px;
-        background: #333;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 8px 16px;
-        font-size: 14px;
-        cursor: pointer;
-        opacity: 0.85;
-    }
-    .back-btn:hover { opacity: 1; }
-
     /* ===== Gaya khusus GAME (di-scope ke #view-game) ===== */
 
-#view-game /* ===== SEMUA CSS SAMA SEPERTI SEBELUMNYA ===== */
-
-    .container {
+#view-game .container {
         background-color: #bbc7f0;
         border-radius: 15px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -533,17 +526,6 @@
 #view-game #submitAnswer {
         margin: 0;
         display: block;
-        background-color: #4CAF50;
-        font-size: 1.2em;
-        padding: 15px;
-    }
-
-#view-game #submitAnswer:hover {
-        background-color: #45a049;
-    }
-
-#view-game #submitAnswer {
-        display: block;
         background-color: #2196F3;
         font-size: 1.2em;
         padding: 15px;
@@ -611,16 +593,8 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
-#view-game .keypad-btn[data-key="C"] {
-        background-color: #ffffff;
-        color: #0a0808;
-    }
-
-#view-game .keypad-btn[data-key="Backspace"] {
-        background-color: #ffffff;
-        color: #0a0808;
-    }
-
+#view-game .keypad-btn[data-key="C"],
+#view-game .keypad-btn[data-key="Backspace"],
 #view-game .keypad-btn[data-key="."],
 #view-game .keypad-btn[data-key=","],
 #view-game .keypad-btn[data-key="-"] {
@@ -655,7 +629,6 @@
         border-radius: 5px;
         animation: pulseIncorrect 0.5s ease;
     }
-
 
     @keyframes pulseCorrect {
         0% { transform: scale(1); }
@@ -713,7 +686,6 @@
         color: #856404;
     }
 
-    
     @media (max-width: 850px) {
 #view-game .container.game-active {
             max-width: 500px;
@@ -743,7 +715,6 @@
 #view-game .question-area input[type="text"] {
             width: calc(100% - 10px);
         }
-
     }
 
     @media (max-width: 600px) {
@@ -760,9 +731,7 @@
         }
 
 #view-game .question { font-size: 1.8em; }
-
     }
-
 
     /* ===== Gaya khusus FORM (di-scope ke #view-form) ===== */
 
@@ -775,7 +744,6 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: fadeIn 0.5s ease-in-out;
         }
-
 
         @keyframes fadeIn {
             from {
@@ -906,7 +874,6 @@
             transform: translate(-50%, -50%);
         }
 
-
         @keyframes spin {
             to {
                 transform: translate(-50%, -50%) rotate(360deg);
@@ -967,7 +934,6 @@
             font-size: 12px;
         }
 
-
         @media (max-width: 480px) {
 #view-form .form-container {
                 padding: 25px;
@@ -981,9 +947,7 @@
                 padding: 10px 14px;
                 font-size: 15px;
             }
-
         }
-    
 </style>
 </head>
 <body id="body-root">
@@ -1016,7 +980,7 @@
                 </svg>
             </div>
             <h1>TERAMPIL BERHITUNG</h1>
-            <div id="subtitle-perkalian">PERKALIAN</div>
+            <div id="subtitle-op">PENJUMLAHAN</div>
             <button id="btn-mulai" class="menu-btn" onclick="goToView('game')"><span class="menu-icon">🚀</span>MULAI</button>
             <button id="btn-daftar" class="menu-btn" onclick="goToView('form')"><span class="menu-icon">📝</span>DAFTAR</button>
             <button id="btn-peserta" class="menu-btn" onclick="goToView('peserta')"><span class="menu-icon">👥</span>PESERTA</button>
@@ -1042,7 +1006,7 @@
     <div id="view-game" class="app-view">
         <button class="back-btn" onclick="goToView('landing')">&larr; Kembali</button>
         <div class="container" id="main-container">
-        <h1>PERKALIAN CEPAT</h1>
+        <h1>PENJUMLAHAN CEPAT</h1>
         <h2>Berhitung cepat, Anda lebih hebat!</h2>
 
         <!-- Status Koneksi -->
@@ -1085,10 +1049,10 @@
                     <p class="info"><b>Level </b> <span id="displaySelectedLevel"></span></p>
                     <p class="info"><b>Sisa waktu</b> <span id="timer"></span></p>
                 </div>
-                
+
                 <div class="game-panel">
                     <div class="question-area">
-                        <p class="question"><span id="number1"></span> x <span id="number2"></span> = </p>
+                        <p class="question"><span id="number1"></span> + <span id="number2"></span> = </p>
                         <input type="text" id="playerAnswer" placeholder="Jawaban Anda" readonly>
                     </div>
 
@@ -1096,7 +1060,7 @@
                         <button id="submitAnswer">Cek Jawaban</button>
                         <div id="score-container">SKOR &nbsp <span id="score">0</span></div>
                     </div>
-                    
+
                     <p id="feedback" class="feedback"></p>
 
                     <div id="keypad-container">
@@ -1149,10 +1113,10 @@
                 <label for="nama">
                     Nama Lengkap <span class="required">*</span>
                 </label>
-                <input 
-                    type="text" 
-                    id="nama" 
-                    name="nama" 
+                <input
+                    type="text"
+                    id="nama"
+                    name="nama"
                     placeholder="Masukkan nama lengkap Anda"
                     required
                     autocomplete="name"
@@ -1164,10 +1128,10 @@
                 <label for="sekolah">
                     Asal Sekolah <span class="required">*</span>
                 </label>
-                <input 
-                    type="text" 
-                    id="sekolah" 
-                    name="sekolah" 
+                <input
+                    type="text"
+                    id="sekolah"
+                    name="sekolah"
                     placeholder="Masukkan nama sekolah Anda"
                     required
                     autocomplete="organization"
@@ -1178,7 +1142,7 @@
             <button type="submit" class="btn-submit" id="submitBtn">Kirim Data</button>
 
             <div class="status-message" id="statusMessage"></div>
-            
+
             <a class="reset-link" onclick="resetForm()">↻ Isi ulang form</a>
         </form>
 
@@ -1224,7 +1188,6 @@ function closePetunjuk() {
     document.getElementById('petunjuk-overlay').classList.remove('active');
 }
 
-// Tampilkan popup petunjuk otomatis saat halaman pertama kali dibuka
 document.addEventListener('DOMContentLoaded', function () {
     showPetunjuk();
 });
@@ -1235,8 +1198,6 @@ function loadPesertaList() {
     statusEl.textContent = 'Memuat data...';
     tbody.innerHTML = '';
 
-    // Menggunakan fungsi getParticipantList() dari Apps Script
-    // (memerlukan penambahan fungsi ini di kode GAS, lihat file terpisah)
     jsonpRequest('getParticipantList', {})
         .then(data => {
             if (!data || data.length === 0) {
@@ -1262,13 +1223,13 @@ function loadPesertaList() {
 </script>
 
 <script>
-// ================= SCRIPT GAME (Perkalian Cepat) =================
+// ================= SCRIPT GAME (Penjumlahan) =================
 
         // ================================================================
-        // [PENTING] URL Web App Google Apps Script
+        // [PENTING] URL Web App Google Apps Script (backend soal penjumlahan)
         // GANTI DENGAN URL WEB APP ANDA SETELAH DEPLOY
         // ================================================================
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwN3Jos6wQLEYUixk69U8h5IG-cLoqk0aSCoJwZXVKiKgArUcUXwTcgqHjkyZm0y30Djg/exec';
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5zQbvMJ4a7sNVzaFr0P7uDPGMLqRIQ30ImgeECiFjtW4wOlRE0C5FgPAUsDOTS9sr/exec';
 
         // ================================================================
         // FUNGSI JSONP - Cara paling reliable untuk mengatasi CORS
@@ -1280,8 +1241,7 @@ function loadPesertaList() {
                 const callbackName = 'jsonp_callback_' + (++jsonpCounter);
                 const script = document.createElement('script');
                 let timeout = null;
-                
-                // Helper pembersihan terpusat
+
                 const cleanup = () => {
                     if (timeout) clearTimeout(timeout);
                     if (window[callbackName]) delete window[callbackName];
@@ -1289,37 +1249,33 @@ function loadPesertaList() {
                         script.parentNode.removeChild(script);
                     }
                 };
-                
-                // Buat URL dengan parameter
+
                 const url = new URL(WEB_APP_URL);
                 url.searchParams.append('function', functionName);
                 url.searchParams.append('params', JSON.stringify(params));
                 url.searchParams.append('callback', callbackName);
-                
-                // Definisikan callback global
+
                 window[callbackName] = function(response) {
                     cleanup();
-                    
+
                     if (response && response.success) {
                         resolve(response.data);
                     } else {
                         reject(new Error((response && response.error) || 'Unknown error'));
                     }
                 };
-                
-                // Set timeout untuk error
+
                 timeout = setTimeout(() => {
                     cleanup();
                     reject(new Error('Request timeout'));
                 }, 30000);
-                
-                // Load script
+
                 script.src = url.toString();
                 script.onerror = function() {
                     cleanup();
                     reject(new Error('Failed to load script'));
                 };
-                
+
                 document.body.appendChild(script);
             });
         }
@@ -1331,8 +1287,7 @@ function loadPesertaList() {
             const statusText = document.getElementById('status-text');
             statusText.textContent = 'Testing...';
             statusText.className = 'status-badge loading';
-            
-            // Test dengan JSONP tanpa function
+
             const callbackName = 'test_callback_' + Date.now();
             const script = document.createElement('script');
             let timeout = null;
@@ -1347,22 +1302,22 @@ function loadPesertaList() {
 
             const url = new URL(WEB_APP_URL);
             url.searchParams.append('callback', callbackName);
-            
+
             window[callbackName] = function(response) {
                 cleanup();
-                
+
                 statusText.textContent = 'Tersambung!';
                 statusText.className = 'status-badge success';
                 alert('Koneksi berhasil!\nResponse: ' + JSON.stringify(response, null, 2));
             };
-            
+
             timeout = setTimeout(() => {
                 cleanup();
                 statusText.textContent = 'Timeout!';
                 statusText.className = 'status-badge error';
                 alert('Koneksi timeout. Cek URL Web App Anda.');
             }, 10000);
-            
+
             script.src = url.toString();
             script.onerror = function() {
                 cleanup();
@@ -1370,7 +1325,7 @@ function loadPesertaList() {
                 statusText.className = 'status-badge error';
                 alert('Gagal koneksi. Pastikan URL Web App benar.');
             };
-            
+
             document.body.appendChild(script);
         }
 
@@ -1385,8 +1340,8 @@ function loadPesertaList() {
             return jsonpRequest('preloadAllLevelsData', {});
         }
 
-        function getMultiplicationData(level) {
-            return jsonpRequest('getMultiplicationData', { level: level });
+        function getAdditionData(level) {
+            return jsonpRequest('getAdditionData', { level: level });
         }
 
         function getUserProgress(name, school) {
@@ -1405,7 +1360,6 @@ function loadPesertaList() {
         // KODE APLIKASI UTAMA
         // ================================================================
 
-        // Elemen UI
         const container = document.getElementById('main-container');
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
@@ -1430,7 +1384,6 @@ function loadPesertaList() {
         const finalSelectedLevelDisplay = document.getElementById('finalSelectedLevel');
         const restartButton = document.getElementById('restartButton');
 
-        // Variabel Game
         let playerName = '';
         let playerSchool = '';
         let selectedLevel = 0;
@@ -1439,17 +1392,15 @@ function loadPesertaList() {
         const FIXED_GAME_DURATION = 90;
         let timeLeft = FIXED_GAME_DURATION;
         let currentQuestion = { num1: 0, num2: 0 };
-        let allMultiplicationData = [];
+        let allAdditionData = [];
         let gameStartTime;
         let currentQuestionIndex = 0;
         let highestUnlockedLevel = 0;
         let preloadedData = {};
         let isChecking = false;
 
-        // Peta/Relasi antara Nama dan Sekolah dari Database
-        let studentSchoolMap = {}; // { "Ahmad Zaini": "SMP Negeri 4 Majenang", ... }
+        let studentSchoolMap = {};
 
-        // Helper untuk ekstrak teks murni jika data bertipe Array 2D
         function parseCleanString(item) {
             if (Array.isArray(item)) {
                 return item[0] ? String(item[0]).trim() : '';
@@ -1491,13 +1442,11 @@ function loadPesertaList() {
             getInitialData()
                 .then(data => {
                     studentSchoolMap = {};
-                    
-                    // Ekstrak list nama & sekolah
+
                     let namesList = [];
                     let schoolsList = [];
 
                     if (data.students && Array.isArray(data.students)) {
-                        // Jika backend mengembalikan pasangan [{name, school}, ...] atau [[nama, sekolah], ...]
                         data.students.forEach(item => {
                             const n = parseCleanString(Array.isArray(item) ? item[0] : item.name);
                             const s = parseCleanString(Array.isArray(item) ? item[1] : item.school);
@@ -1510,7 +1459,6 @@ function loadPesertaList() {
                             }
                         });
                     } else {
-                        // Jika backend mengembalikan object { names: [...], schools: [...] }
                         const rawNames = data.names || [];
                         const rawSchools = data.schools || [];
 
@@ -1533,7 +1481,6 @@ function loadPesertaList() {
                         });
                     }
 
-                    // Populate Dropdown Nama
                     playerNameSelect.innerHTML = '<option value="" selected> Pilih Nama </option>';
                     if (namesList.length > 0) {
                         namesList.forEach(name => {
@@ -1548,7 +1495,6 @@ function loadPesertaList() {
                         playerNameSelect.disabled = true;
                     }
 
-                    // Populate Dropdown Sekolah
                     playerSchoolSelect.innerHTML = '<option value="" selected> Pilih Sekolah </option>';
                     if (schoolsList.length > 0) {
                         schoolsList.forEach(school => {
@@ -1575,21 +1521,21 @@ function loadPesertaList() {
         // FUNGSI FETCH SPREADSHEET DATA
         // ================================================================
         function fetchSpreadsheetDataFromAppsScript(level) {
-            allMultiplicationData = [];
+            allAdditionData = [];
             feedbackDisplay.textContent = 'Memuat soal...';
             submitAnswerButton.disabled = true;
 
-            getMultiplicationData(level)
+            getAdditionData(level)
                 .then(data => {
-                    allMultiplicationData = data;
+                    allAdditionData = data;
                     submitAnswerButton.disabled = false;
 
-                    if (allMultiplicationData.length === 0) {
-                        feedbackDisplay.textContent = 'Tidak ada data perkalian untuk level ini.';
+                    if (allAdditionData.length === 0) {
+                        feedbackDisplay.textContent = 'Tidak ada data penjumlahan untuk level ini.';
                         return;
                     }
 
-                    console.log(`Data Level ${level} dimuat:`, allMultiplicationData.length, 'soal');
+                    console.log(`Data Level ${level} dimuat:`, allAdditionData.length, 'soal');
                     currentQuestionIndex = 0;
                     loadNewQuestion();
                     startTimer();
@@ -1629,10 +1575,9 @@ function loadPesertaList() {
             playerAnswerInput.value = '';
             gameStartTime = new Date().getTime();
 
-            // Coba gunakan data preload
             if (preloadedData[selectedLevel] && preloadedData[selectedLevel].length > 0) {
-                allMultiplicationData = preloadedData[selectedLevel];
-                console.log(`Menggunakan data preload Level ${selectedLevel}:`, allMultiplicationData.length + ' soal');
+                allAdditionData = preloadedData[selectedLevel];
+                console.log(`Menggunakan data preload Level ${selectedLevel}:`, allAdditionData.length + ' soal');
                 currentQuestionIndex = 0;
                 loadNewQuestion();
                 startTimer();
@@ -1682,17 +1627,17 @@ function loadPesertaList() {
         // FUNGSI GAME
         // ================================================================
         function loadNewQuestion() {
-            if (allMultiplicationData.length === 0) {
+            if (allAdditionData.length === 0) {
                 showFeedback('Tidak ada soal.', false);
                 return;
             }
-            if (currentQuestionIndex >= allMultiplicationData.length) {
+            if (currentQuestionIndex >= allAdditionData.length) {
                 showFeedback('Semua soal telah selesai! Mengakhiri game.', true);
                 setTimeout(endGame, 1500);
                 return;
             }
 
-            const selectedPair = allMultiplicationData[currentQuestionIndex];
+            const selectedPair = allAdditionData[currentQuestionIndex];
             currentQuestion.num1 = selectedPair[0];
             currentQuestion.num2 = selectedPair[1];
 
@@ -1726,7 +1671,7 @@ function loadPesertaList() {
             showFeedback('Memeriksa...', true);
 
             setTimeout(() => {
-                const correctAnswer = currentQuestion.num1 * currentQuestion.num2;
+                const correctAnswer = currentQuestion.num1 + currentQuestion.num2;
                 const isCorrect = (userAnswerFloat == correctAnswer);
 
                 if (isCorrect) {
@@ -1845,14 +1790,12 @@ function loadPesertaList() {
         // ================================================================
         // EVENT LISTENERS & SINKRONISASI DROPDOWN
         // ================================================================
-        
-        // Otomatis set Sekolah ketika Nama dipilih
+
         playerNameSelect.addEventListener('change', () => {
             const selectedName = playerNameSelect.value;
             if (selectedName && studentSchoolMap[selectedName]) {
                 const targetSchool = studentSchoolMap[selectedName];
-                
-                // Cari opsi sekolah yang cocok
+
                 for (let i = 0; i < playerSchoolSelect.options.length; i++) {
                     if (playerSchoolSelect.options[i].value === targetSchool) {
                         playerSchoolSelect.selectedIndex = i;
@@ -1897,12 +1840,11 @@ function loadPesertaList() {
         // ================================================================
         window.onload = () => {
             updateTimerDisplay();
-            
+
             const statusText = document.getElementById('status-text');
             statusText.textContent = 'Menguji koneksi...';
             statusText.className = 'status-badge loading';
-            
-            // Test koneksi dengan JSONP
+
             const callbackName = 'init_callback_' + Date.now();
             const script = document.createElement('script');
             let timeout = null;
@@ -1917,25 +1859,24 @@ function loadPesertaList() {
 
             const url = new URL(WEB_APP_URL);
             url.searchParams.append('callback', callbackName);
-            
+
             window[callbackName] = function(response) {
                 cleanup();
-                
+
                 statusText.textContent = 'Tersambung';
                 statusText.className = 'status-badge success';
-                
-                // Load data setelah koneksi berhasil
+
                 fetchInitialData();
                 preloadGameData();
             };
-            
+
             timeout = setTimeout(() => {
                 cleanup();
                 statusText.textContent = 'Gagal koneksi!';
                 statusText.className = 'status-badge error';
                 alert('Tidak dapat terhubung ke server.\n\nPastikan:\n1. URL Web App benar\n2. Web App sudah dideploy\n3. Akses diatur ke "Anyone"\n\nCoba klik tombol "Test Koneksi"');
             }, 15000);
-            
+
             script.src = url.toString();
             script.onerror = function() {
                 cleanup();
@@ -1943,10 +1884,9 @@ function loadPesertaList() {
                 statusText.className = 'status-badge error';
                 alert('Gagal koneksi. Cek URL Web App Anda.');
             };
-            
+
             document.body.appendChild(script);
         };
-    
 </script>
 
 <script>
@@ -1956,29 +1896,23 @@ function loadPesertaList() {
         // Spreadsheet ID: 1Q5garJNM9b6kP-jehoMCBQFGd8_lLvqXwrPgAVQzVUg
         // Sheet name: nama
         // Kolom A: Nama, Kolom B: Sekolah
-        
-        // URL Web App (Ganti dengan URL deploy Web App Anda)
-        // Untuk menggunakan script ini, Anda perlu membuat Web App di Google Apps Script
-        // dan mengganti URL di bawah ini dengan URL Web App Anda
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwWxf-oM2lF-4qmA_xVeyVAAL02hDHeAyUtILwM2P7FkXMjTGDTf5IOo60hjfZX7kYyg/exec"; // Ganti dengan URL Anda
 
-        // Jika belum memiliki Web App, gunakan mode simulasi untuk testing
+        // URL Web App (Ganti dengan URL deploy Web App Anda)
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzCVaqmYLy00t_0pgQWJAmrZOrq4tjZq_1JLmzyeQ6qUy5r_I7vt2Ylz-CtQ8ApgKkL/exec"; // Ganti dengan URL Anda
+
         const USE_SIMULATION = false; // Set ke false jika sudah memiliki Web App
 
         function handleSubmit(event) {
             event.preventDefault();
-            
-            // Reset status
+
             clearErrors();
             hideStatus();
 
-            // Ambil nilai input
             const namaInput = document.getElementById('nama');
             const sekolahInput = document.getElementById('sekolah');
             const nama = namaInput.value.trim();
             const sekolah = sekolahInput.value.trim();
 
-            // Validasi
             let isValid = true;
 
             if (!nama) {
@@ -2002,7 +1936,6 @@ function loadPesertaList() {
                 return;
             }
 
-            // Kirim data
             submitData(nama, sekolah);
         }
 
@@ -2017,47 +1950,36 @@ function loadPesertaList() {
             };
 
             if (USE_SIMULATION) {
-                // Mode simulasi untuk testing tanpa Web App
                 console.log('📤 Data yang dikirim (simulasi):', data);
-                
-                // Simulasi delay jaringan
+
                 setTimeout(() => {
-                    // Simulasikan sukses
                     showStatus('✅ Data berhasil dikirim! (Mode Simulasi)', 'success');
                     submitBtn.disabled = false;
                     submitBtn.classList.remove('loading');
-                    
-                    // Reset form setelah sukses
+
                     document.getElementById('registrationForm').reset();
-                    
-                    // Log data untuk debugging
+
                     console.log('📊 Data yang akan disimpan ke Google Sheet:');
                     console.log(`  - Nama: ${data.nama}`);
                     console.log(`  - Sekolah: ${data.sekolah}`);
-                    console.log(`  - Spreadsheet ID: 1Q5garJNM9b6kP-jehoMCBQFGd8_lLvqXwrPgAVQzVUg`);
-                    console.log(`  - Sheet: nama`);
-                    console.log(`  - Kolom A: Nama, Kolom B: Sekolah`);
                 }, 1500);
                 return;
             }
 
-            // Kirim data ke Google Apps Script Web App
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // Mode no-cors untuk menghindari CORS
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data)
             })
             .then(response => {
-                // Karena mode no-cors, response tidak bisa dibaca
-                // Tapi data tetap terkirim
                 showStatus('✅ Data berhasil dikirim!', 'success');
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('loading');
                 document.getElementById('registrationForm').reset();
-                
+
                 console.log('✅ Data terkirim ke Google Sheets');
                 console.log(`  - Nama: ${data.nama}`);
                 console.log(`  - Sekolah: ${data.sekolah}`);
@@ -2070,7 +1992,6 @@ function loadPesertaList() {
             });
         }
 
-        // --- Fungsi UI ---
         function showError(id) {
             document.getElementById(id).classList.add('show');
         }
@@ -2103,12 +2024,10 @@ function loadPesertaList() {
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = false;
             submitBtn.classList.remove('loading');
-            
-            // Fokus ke input pertama
+
             document.getElementById('nama').focus();
         }
 
-        // Tambahkan event listener untuk real-time validation
         document.addEventListener('DOMContentLoaded', function() {
             const namaInput = document.getElementById('nama');
             const sekolahInput = document.getElementById('sekolah');
@@ -2127,10 +2046,8 @@ function loadPesertaList() {
                 }
             });
 
-            // Fokus ke input pertama
             namaInput.focus();
         });
-    
 </script>
 
 </body>
