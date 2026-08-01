@@ -1157,7 +1157,7 @@
             <button class="back-btn" onclick="goToView('landing')">&larr; Kembali</button>
             <h2>Daftar Peserta</h2>
             <p class="sub">Data nama & sekolah dari Google Sheet</p>
-            <button id="peserta-reload-btn" onclick="loadPesertaList()">&#8635; Muat Ulang</button>
+            <button id="peserta-reload-btn" onclick="loadPesertaList(true)">&#8635; Muat Ulang</button>
             <p id="peserta-status">Memuat data...</p>
             <div id="peserta-table-wrap">
                 <table id="peserta-table">
@@ -1192,13 +1192,14 @@ document.addEventListener('DOMContentLoaded', function () {
     showPetunjuk();
 });
 
-function loadPesertaList() {
+function loadPesertaList(force) {
     const statusEl = document.getElementById('peserta-status');
     const tbody = document.getElementById('peserta-table-body');
     statusEl.textContent = 'Memuat data...';
     tbody.innerHTML = '';
 
-    jsonpRequest('getParticipantList', {})
+    // Menggunakan fungsi getParticipantList() dari Apps Script
+    jsonpRequest('getParticipantList', { force: !!force })
         .then(data => {
             if (!data || data.length === 0) {
                 statusEl.textContent = 'Belum ada data peserta.';
@@ -1229,7 +1230,7 @@ function loadPesertaList() {
         // [PENTING] URL Web App Google Apps Script (backend soal penjumlahan)
         // GANTI DENGAN URL WEB APP ANDA SETELAH DEPLOY
         // ================================================================
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz5zQbvMJ4a7sNVzaFr0P7uDPGMLqRIQ30ImgeECiFjtW4wOlRE0C5FgPAUsDOTS9sr/exec';
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzgXI4tM6fe6rcYYvFIqSS_uruBiJx9tC3bDmtAloL-r0ZnWICJqNNOqyALYJ6wiw-NuA/exec';
 
         // ================================================================
         // FUNGSI JSONP - Cara paling reliable untuk mengatasi CORS
@@ -1642,7 +1643,9 @@ function loadPesertaList() {
             currentQuestion.num2 = selectedPair[1];
 
             number1Display.textContent = currentQuestion.num1;
-            number2Display.textContent = currentQuestion.num2;
+            number2Display.textContent = currentQuestion.num2 < 0
+                ? '(' + currentQuestion.num2 + ')'
+                : currentQuestion.num2;
             playerAnswerInput.value = '';
             showFeedback('', true);
             focusAnswerInput();
